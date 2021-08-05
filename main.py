@@ -1,6 +1,6 @@
-from models.labyrinth.labyrinth import Labyrinth
+from models.labyrinth import Labyrinth
 
-laby = Labyrinth(shape=(7, 2),
+laby = Labyrinth(shape=(25, 10),
                  methode='full')
 
 laby.screen()
