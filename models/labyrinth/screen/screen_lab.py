@@ -1,13 +1,12 @@
 import tkinter as tk
 from screeninfo import get_monitors
 
-# from models.labyrinth.labyrinth import Labyrinth
-from .print_mode import *
+from .print_mode import print_mode
+
+from models.labyrinth.simplify import *
 
 
-def screen_lab(labyrinth):
-# def screen_lab(labyrinth: Labyrinth):
-    laby = labyrinth
+def screen_lab(laby: 'Labyrinth'):
 
     window = tk.Tk()
     window.title("Auto labyrinth")

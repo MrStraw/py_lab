@@ -2,9 +2,10 @@ import tkinter as tk
 
 from models import _Tile
 
+from models.labyrinth.simplify import *
 
-def print_mode(labyrinth, canvas: tk.Canvas, pixel_len: int, mode: str = 'B&W'):
-    laby = labyrinth
+
+def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len: int, mode: str = 'B&W'):
 
     for t in laby.tiles:
         tile: _Tile = t

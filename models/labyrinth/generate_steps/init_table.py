@@ -1,9 +1,10 @@
 from models import _Path, _Tile
 from utils import list_of_int
 
+from models.labyrinth.simplify import *
 
-def init_table(labyrinth):
-    laby = labyrinth
+
+def init_table(laby: 'Labyrinth'):
     width, height = laby.shape
 
     nb_wall = int(((width - 1) / 2) * ((height - 1) / 2))
