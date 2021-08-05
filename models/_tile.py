@@ -1,3 +1,5 @@
+from typing import List
+
 import numpy as np
 
 from models._path import _Path
@@ -18,7 +20,7 @@ class _Tile:
         self.__path: _Path = path
         self.__is_start_or_arrival: int = 0
         self.make_start_or_arrival(start_or_arrival)
-        self._solution: int = -1
+        self._solution: int = 0
         self.distance: int = 0
         self.deadlock: bool = False
         self.__table: np.ndarray = table
@@ -29,11 +31,11 @@ class _Tile:
 
     @property
     def x(self):
-        return self.location[0]
+        return self.__location[0]
 
     @property
     def y(self):
-        return self.location[1]
+        return self.__location[1]
 
     @property
     def is_start(self):
@@ -60,15 +62,17 @@ class _Tile:
         return self.__table
 
     @property
-    def voisins(self) -> list:
+    def voisins(self) -> List['_Tile']:
         tuples = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         voisins = []
         for t in tuples:
             try:
-                case_voisine: _Tile = self.table[t[0] + self.y, t[1] + self.x]
+                voisin: _Tile = self.table[t[0] + self.y, t[1] + self.x]
             except IndexError:
                 continue
-            voisins.append(case_voisine)
+            if not self.x - 1 <= voisin.x <= self.x + 1 or not self.y - 1 <= voisin.y <= self.y + 1:
+                continue
+            voisins.append(voisin)
         return voisins
 
     @property

@@ -1,8 +1,12 @@
 from models.labyrinth import Labyrinth
+from utils.print_t import print_t
 
-laby = Labyrinth(shape=(120, 60),
+laby = Labyrinth(shape=(120, 50),
                  methode='full')
 
-laby.screen('distance')
+# print_t(laby.table, 'distance')
 
-# TODO seed, % de fusion, arrive et depart
+laby.screen('solution')
+
+
+# TODO seed, % de fusion, arrive et depart, thread screen()
