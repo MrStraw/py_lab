@@ -6,7 +6,7 @@ from .print_mode import print_mode
 from models.labyrinth.simplify import *
 
 
-def screen_lab(laby: 'Labyrinth'):
+def screen_lab(laby: 'Labyrinth', mode: str):
 
     window = tk.Tk()
     window.title("Auto labyrinth")
@@ -39,7 +39,7 @@ def screen_lab(laby: 'Labyrinth'):
     canvas = tk.Canvas(window, width=s_width, height=s_height, bg='black')
     canvas.pack()
 
-    def simple_sprint(mode: str = 'B&W'):
+    def simple_sprint():
         print_mode(laby, canvas, pixel_len, mode)
 
     # affichage du lab en noir et blanc

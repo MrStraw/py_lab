@@ -64,6 +64,10 @@ class Labyrinth:
     def tile_arrival(self) -> _Tile:
         return self.table[self.height - 2, self.width - 1]
 
+    @property
+    def path(self):
+        return self.tile_start.path if self.tile_start is not None else None
+
     def generate(self):
         """
 
@@ -71,9 +75,9 @@ class Labyrinth:
         """
         all_step(self)
 
-    def screen(self):
+    def screen(self, mode='B&W'):
         """
 
         :return:
         """
-        screen_lab(self)
+        screen_lab(self, mode)
