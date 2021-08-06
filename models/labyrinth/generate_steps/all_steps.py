@@ -7,6 +7,7 @@ from models.labyrinth.simplify import *
 
 
 def all_step(laby: 'Labyrinth'):
+    print(f"Seed = '{laby.seed}'")
 
     print('Initialization du tableau')
     init_table(laby)

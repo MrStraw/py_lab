@@ -21,6 +21,7 @@ def one_shot_the_path(laby: 'Labyrinth'):
 
 
 def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
+    random.seed(laby.seed)
     table = laby.table
     tile_l = crossroad[0]
     tile_c = crossroad[1]
@@ -42,7 +43,7 @@ def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
             tile_loose = tile_1
         tile_loose.path.add_tile(tile_0)
         tile_win.path.fusion(tile_loose.path)
-    elif random.random() < laby.break_proba:
+    elif random.random() < laby.complexity:
         tile_1.path.add_tile(tile_0)
 
 
@@ -59,6 +60,7 @@ def find_crossroads(laby: 'Labyrinth') -> list:
         for y in range(2, l_colone - 2, 2):
             pile.append((x, y, '-'))
 
+    random.seed(laby.seed)
     random.shuffle(pile)
     return pile
 

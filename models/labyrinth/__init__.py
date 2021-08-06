@@ -5,6 +5,7 @@ from models import Lists
 from models.tile import Tile
 from models.labyrinth.generate_steps import all_step
 from models.labyrinth.screen import screen_lab
+from utils import generate_seed
 
 
 class Labyrinth:
@@ -12,18 +13,25 @@ class Labyrinth:
     def __init__(self,
                  shape: (int, int),
                  methode: str = 'hole',
-                 break_proba: float = 0.1
+                 complexity: float = 0.1,
+                 seed=None
                  ):
         """
         Create a maze of at least 5x5 shape, filled or with random holes.
 
         :param shape: (width x height), 5x5 minimum
         :param methode: 'hole' or 'full'
-        :param break_proba: probability that a wall becomes a path, even if it is surrounded by the same path through and through
+        :param complexity: bethween 0 and 1. The probability that a wall becomes a path, even if it is surrounded by the same path through and through
+        :param seed: Seed of the maze
         """
-        if not 0 <= break_proba <= 1:
+        if seed is None:
+            self.seed = generate_seed()
+        else:
+            self.seed = seed
+        if not 0 <= complexity <= 1:
             raise Exception('Argument break_proba need to be between 0 and 1')
-        self.break_proba: float = break_proba
+        self.complexity: float = complexity
+
         self.lists = Lists()
         width = shape[0] if shape[0] % 2 else shape[0] + 1
         width = 5 if width < 5 else width
@@ -52,8 +60,9 @@ class Labyrinth:
 
     @methode.setter
     def methode(self, value: str):
-        methode = 'hole' if value not in ['hole', 'full'] else value
-        self.__methode: str = methode
+        if value not in ['hole', 'full']:
+            raise Exception('methode not reconize')
+        self.__methode: str = value
 
     @property
     def tiles(self) -> List[Tile]:

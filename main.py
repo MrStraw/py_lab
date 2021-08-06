@@ -1,11 +1,13 @@
 from models.labyrinth import Labyrinth
 
-a = 10
-tup = (int(1920/a), int(1080/a))
+a = 40
+tup = (int(1920 / a), int(1080 / a))
 
 laby = Labyrinth(shape=tup,
+                 seed='test',
                  methode='hole',
-                 break_proba=0.4)
+                 complexity=0.4,
+                 )
 
 laby.screen('distance')
 
