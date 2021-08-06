@@ -14,7 +14,8 @@ class Labyrinth:
                  shape: (int, int),
                  methode: str = 'hole',
                  complexity: float = 0.1,
-                 seed=None
+                 seed=None,
+                 stop_to_step: str = None
                  ):
         """
         Create a maze of at least 5x5 shape, filled or with random holes.
@@ -23,6 +24,7 @@ class Labyrinth:
         :param methode: 'hole' or 'full'
         :param complexity: bethween 0 and 1. The probability that a wall becomes a path, even if it is surrounded by the same path through and through
         :param seed: Seed of the maze
+        :param stop_to_step: 'distance', 'deadlock' or 'solution'. Allow to stop at a specifiic step.
         """
         if seed is None:
             self.seed = generate_seed()
@@ -40,6 +42,7 @@ class Labyrinth:
         self.__shape = (width, height)
         self.methode = methode
         self.table: np.ndarray = np.zeros((self.height, self.width), dtype=Tile)
+        self._stop_to_step: str = stop_to_step
         self.generate()
 
     @property
@@ -90,8 +93,12 @@ class Labyrinth:
         """
         all_step(self)
 
-    def screen(self, mode='B&W'):
+    def screen(self,
+               mode: str = 'B&W',
+               fullscreen: bool = False,
+               display: str = 'spread out'
+               ):
         """
         Print the maze with a lot of beautifuls options
         """
-        screen_lab(self, mode)
+        screen_lab(self, mode, fullscreen, display)

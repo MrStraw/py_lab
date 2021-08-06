@@ -6,17 +6,15 @@ from models.labyrinth.simplify import *
 from utils import int_to_grad_hexa
 
 
-def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len: int, mode: str = 'B&W'):
+def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len, mode: str = 'B&W'):
     def make_pix(tile: Tile, color: str):
-        x_pix = tile.x * pixel_len
-        y_pix = tile.y * pixel_len
-        canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len, y_pix + pixel_len, outline='', fill=color)
+        x_pix = tile.x * pixel_len[0]
+        y_pix = tile.y * pixel_len[1]
+        canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len[0], y_pix + pixel_len[1], outline='', fill=color)
 
     # création du Black & White
     canvas.delete('all')
     for tile in laby.tiles:
-        x_pix = tile.x * pixel_len
-        y_pix = tile.y * pixel_len
         if tile.path:
             make_pix(tile, 'white')
         elif len(tile.voisins) in [2, 3]:

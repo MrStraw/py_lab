@@ -11,8 +11,10 @@ sys.setrecursionlimit(3000)
 laby = Labyrinth(shape=tup,
                  seed=None,
                  methode='hole',
-                 complexity=0.05,
+                 complexity=0.07,
+                 stop_to_step='deadlock'
                  )
 print(laby.seed)
-laby.screen()
-
+laby.screen(mode='B&W',
+            fullscreen=False,
+            display='square')

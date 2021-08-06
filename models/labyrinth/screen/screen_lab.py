@@ -6,12 +6,12 @@ from .print_mode import print_mode
 from models.labyrinth.simplify import *
 
 
-def screen_lab(laby: 'Labyrinth', mode: str):
+def screen_lab(laby: 'Labyrinth', mode: str, fullscreen: bool, display: str):
 
     window = tk.Tk()
     window.title("Auto labyrinth")
     window.configure(background='black')
-    # window.attributes('-fullscreen', True)
+    window.attributes('-fullscreen', fullscreen)
 
     # Recherche du plus grand écran
     length = 0
@@ -24,16 +24,24 @@ def screen_lab(laby: 'Labyrinth', mode: str):
             s_width = m.width
             s_height = m.height
     window.geometry(f"{s_width}x{s_height}")
-    s_height -= 60
-    s_width -= 60
-    window.minsize(s_width, s_height)
+    if not fullscreen:
+        s_width -= 70
+        s_height -= 70
 
     # taille des pixels
-    pixel_len_width = int(s_width / laby.width)
-    pixel_len_height = int(s_height / laby.height)
-    pixel_len: int = min(pixel_len_height, pixel_len_width)
-    if pixel_len < 2:
+    pixel_len_width = s_width / laby.width
+    pixel_len_height = s_height / laby.height
+    if min(pixel_len_height, pixel_len_width) < 1:
         raise Exception("Labyrinth to big for the screen")  # TODO afficher la taille min
+    if display == 'spread out':
+        pixel_len = (pixel_len_width, pixel_len_height)
+    elif display == 'square':
+        pixel_len = min(pixel_len_height, pixel_len_width)
+        pixel_len = (pixel_len, pixel_len)
+    else:
+        raise Exception("Bad option for 'display'.")
+
+    window.minsize(round(pixel_len[0] * laby.width), round(pixel_len[1] * laby.height))
 
     # Création du canva
     canvas = tk.Canvas(window, width=s_width, height=s_height, bg='black')

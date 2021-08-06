@@ -7,6 +7,8 @@ from models.labyrinth.simplify import *
 
 
 def all_step(laby: 'Labyrinth'):
+    if laby._stop_to_step not in ['distance', 'solution', 'deadlock', None]:
+        raise Exception('Option stop_to_step not reconize')
 
     print('Initialization du tableau')
     init_table(laby)
@@ -14,13 +16,22 @@ def all_step(laby: 'Labyrinth'):
     print("Création du chemin")
     one_shot_the_path(laby)
 
+    if laby._stop_to_step == 'distance':
+        print("Done")
+        return
     print("Mesure des distances")
     mesure_distance(laby)
 
-    print("Résolution du labyrinthe")
-    resoudre_lab(laby)
+    if laby._stop_to_step == 'solution':
+        pass
+    else:
+        print("Résolution du labyrinthe")
+        resoudre_lab(laby)
 
-    print("Calcul des impasses")
-    impasses(laby)
+    if laby._stop_to_step == 'deadlock':
+        pass
+    else:
+        print("Calcul des impasses")
+        impasses(laby)
 
     print("Done")

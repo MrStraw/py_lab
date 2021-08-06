@@ -13,7 +13,7 @@ class Path:
                  ):
 
         self.color = color
-        self.__tiles = []
+        self.__tiles = set()
         self.__length = 0
 
     def __len__(self):
@@ -23,17 +23,17 @@ class Path:
         return True
 
     def add_tile(self, tile: 'Tile'):
-        self.__tiles.append(tile)
+        self.__tiles.add(tile)
         self.__length += 1
         tile._path = self
 
     @property
-    def tiles(self) -> List['Tile']:
+    def tiles(self) -> set['Tile']:
         return self.__tiles
 
     def fusion(self, other):
         for tile in other.tiles:
             tile.path = self
-            self.__tiles.append(tile)
+            self.__tiles.add(tile)
         self.__length += other.__length
         del other
