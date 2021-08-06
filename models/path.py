@@ -22,10 +22,10 @@ class Path:
     def __bool__(self):
         return True
 
-    def add_tile(self, tile):
+    def add_tile(self, tile: 'Tile'):
         self.__tiles.append(tile)
         self.__length += 1
-        tile._Case__path = self
+        tile._path = self
 
     @property
     def tiles(self) -> List['Tile']:

@@ -17,7 +17,7 @@ class Tile:
         self.__location: (int, int) = location
         if path:
             path.add_tile(self)
-        self.__path: Path = path
+        self._path: Path = path
         self.__is_start_or_arrival: int = 0
         self.make_start_or_arrival(start_or_arrival)
         self._solution: int = 0
@@ -76,24 +76,20 @@ class Tile:
 
     @property
     def color(self) -> int:
-        return self.__path.color if self.__path else 0
+        return self._path.color if self._path else 0
 
     @property
     def path(self):
-        return self.__path
+        return self._path
 
     @path.setter
     def path(self, value: Path):
         value.add_tile(self)
-        self.__path: Path = value
+        self._path: Path = value
 
     @path.deleter
     def path(self):
-        path = self.__path
+        path = self._path
         for tile in path.tiles:
-            tile._Tile__path = None
+            tile._path = None
         del path
-
-    # @property
-    # def deadlock(self) -> bool:
-    #     return True if self. in self.

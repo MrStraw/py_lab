@@ -8,19 +8,19 @@ from models.labyrinth.simplify import *
 
 def all_step(laby: 'Labyrinth'):
 
-    # print('Initialization du tableau')
+    print('Initialization du tableau')
     init_table(laby)
 
-    # print("Création du chemin")
+    print("Création du chemin")
     one_shot_the_path(laby)
 
-    # print("Mesure des distances")
+    print("Mesure des distances")
     mesure_distance(laby)
 
-    # print("Résolution du labyrinthe")
+    print("Résolution du labyrinthe")
     resoudre_lab(laby)
 
-    # print("Calcul des impasses")
+    print("Calcul des impasses")
     impasses(laby)
 
-    # print("Done")
+    print("Done")
