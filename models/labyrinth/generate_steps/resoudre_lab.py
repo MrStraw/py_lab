@@ -4,7 +4,7 @@ from models.labyrinth.simplify import *
 
 def resoudre_lab(laby: 'Labyrinth'):
     laby.tile_arrival._solution = 1
-    laby.lists.solutions.append(laby.tile_arrival)
+    laby.lists.solutions.add(laby.tile_arrival)
     find(laby.tile_arrival, laby)
 
 
@@ -21,5 +21,5 @@ def find(tile: Tile, laby):
                 choosen = voisin
     if choosen:
         choosen._solution = 1
-        laby.lists.solutions.append(choosen)
+        laby.lists.solutions.add(choosen)
         find(choosen, laby)

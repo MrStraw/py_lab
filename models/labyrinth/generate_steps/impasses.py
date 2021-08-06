@@ -3,7 +3,6 @@ from models.labyrinth.simplify import *
 
 
 def impasses(laby: 'Labyrinth'):
-    return
 
     def is_full_path(tile: Tile) -> bool:
         is_path = bool(tile.path)
@@ -23,5 +22,5 @@ def impasses(laby: 'Labyrinth'):
                 if is_full_path(voisin):
                     nb_voisin += 1
             if nb_voisin <= 1:
-                laby.lists._deadlocks.append(tile)
+                laby.lists._deadlocks.add(tile)
                 stop = 0

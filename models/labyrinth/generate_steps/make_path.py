@@ -6,21 +6,27 @@ from models.labyrinth.simplify import *
 
 def one_shot_the_path(laby: 'Labyrinth'):
     crossroads_list = find_crossroads(laby)
+
+    random.seed(laby.seed)
+    list_rand = []
+    for i in range(len(crossroads_list)):
+        list_rand.append(random.random())
+
     if laby.methode == 'full':
         while crossroads_list:
             crossroad = crossroads_list.pop()
-            make_one_step_path(laby, crossroad)
+            make_one_step_path(laby, list_rand.pop(), crossroad)
     elif laby.methode == 'hole':
         while laby.tile_start.path is not laby.tile_arrival.path:
             crossroad = crossroads_list.pop()
-            make_one_step_path(laby, crossroad)
+            make_one_step_path(laby, list_rand.pop(), crossroad)
     else:
         raise Exception('Methode not reconize')
 
     delete_falses_paths(laby)
 
 
-def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
+def make_one_step_path(laby: 'Labyrinth', rand: float, crossroad: (int, int, str)):
     random.seed(laby.seed)
     table = laby.table
     tile_l = crossroad[0]
@@ -43,7 +49,7 @@ def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
             tile_loose = tile_1
         tile_loose.path.add_tile(tile_0)
         tile_win.path.fusion(tile_loose.path)
-    elif random.random() < laby.complexity:
+    elif rand <= laby.complexity:
         tile_1.path.add_tile(tile_0)
 
 

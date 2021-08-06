@@ -1,9 +1,9 @@
 class Lists:
 
     def __init__(self):
-        self._deadlocks = []
-        self._solutions = []
-        self._distances = []
+        self._deadlocks = set()
+        self._solutions = set()
+        self._distances = set()
 
     @property
     def deadlocks(self):
