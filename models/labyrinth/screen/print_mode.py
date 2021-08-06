@@ -7,16 +7,17 @@ from utils import int_to_grad_hexa
 
 
 def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len: int, mode: str = 'B&W'):
-    if mode not in ['B&W', 'distance', 'solution']:
+    if mode not in ['B&W', 'distance', 'solution', 'impasses']:
         raise Exception(f"mode {mode} for screen() not reconize.")
 
-    for t in laby.tiles:
-        tile: _Tile = t
+    # création du Black & White
+    canvas.delete('all')
+    for tile in laby.tiles:
         x_pix = tile.x * pixel_len
         y_pix = tile.y * pixel_len
-        color = 'white' if tile.path else 'black'
-        canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len, y_pix + pixel_len,
-                                outline='', fill=color)
+        if tile.path:
+            canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len, y_pix + pixel_len,
+                                    outline='', fill='white')
 
     if mode == 'B&W':
         return
@@ -33,8 +34,11 @@ def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len: int, mode: str =
 
         elif mode == 'solution':
             if tile.is_solution:
-                color = 'red'
-                # color = grad[tile.distance - 1]
+                color = grad[tile.distance - 1]
+
+        elif mode == 'impasses':
+            if tile.deadlock:
+                color = 'grey'
 
         canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len, y_pix + pixel_len,
                                 outline='', fill=color)

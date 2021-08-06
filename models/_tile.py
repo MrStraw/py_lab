@@ -17,12 +17,14 @@ class _Tile:
         self.__location: (int, int) = location
         if path:
             path.add_tile(self)
+            self.deadlock: bool = False
+        else:
+            self.deadlock: bool = True
         self.__path: _Path = path
         self.__is_start_or_arrival: int = 0
         self.make_start_or_arrival(start_or_arrival)
         self._solution: int = 0
         self.distance: int = 0
-        self.deadlock: bool = False
         self.__table: np.ndarray = table
 
     @property
@@ -86,4 +88,5 @@ class _Tile:
     @path.setter
     def path(self, value: _Path):
         value.add_tile(self)
-        self.__path = value
+        self.__path: _Path = value
+        self.deadlock: bool = False

@@ -39,10 +39,24 @@ def screen_lab(laby: 'Labyrinth', mode: str):
     canvas = tk.Canvas(window, width=s_width, height=s_height, bg='black')
     canvas.pack()
 
-    def simple_sprint():
-        print_mode(laby, canvas, pixel_len, mode)
+    def simple_sprint(modee=mode):
+        print_mode(laby, canvas, pixel_len, modee)
 
     # affichage du lab en noir et blanc
     simple_sprint()
 
+    # Menu
+    menu = tk.Menu(window)
+    menu_print = tk.Menu(menu, tearoff=0)
+    # menu_print.add_command(label="Créer un nouveau labyrinthe", command=lambda: generate(laby, canvas))
+    menu_print.add_separator()
+    menu_print.add_command(label="Classique", command=lambda: simple_sprint('B&W'))
+    menu_print.add_command(label="Solution", command=lambda: simple_sprint('solution'))
+    menu_print.add_command(label="Voir les impasses", command=lambda: simple_sprint('impasses'))
+    # menu_print.add_command(label="Tous les chemins", command=lambda: simple_sprint('tout chemins'))
+    menu_print.add_command(label="Gradiant des distances", command=lambda: simple_sprint('distance'))
+    # menu_print.add_command(label="Tout les chemins en gradiant", command=lambda: simple_sprint('grad sans impasse'))
+    menu.add_cascade(label="Print mode", menu=menu_print)
+
+    window.config(menu=menu)
     window.mainloop()

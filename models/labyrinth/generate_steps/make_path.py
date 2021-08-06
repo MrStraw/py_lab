@@ -24,7 +24,7 @@ def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
         tile_1: _Tile = table[tile_l - 1, tile_c]
         tile_2: _Tile = table[tile_l + 1, tile_c]
 
-    if tile_1.path is not tile_2.path:  # TODO utile mnt ? le graphoque ne s'incere pas entre les deux
+    if tile_1.path is not tile_2.path:  # TODO Le graphique ne s'incere pas entre les deux (envoyer une list.copy en return)
         if len(tile_1.path) > len(tile_2.path):
             tile_win = tile_1
             tile_loose = tile_2
@@ -32,8 +32,9 @@ def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
             tile_win = tile_2
             tile_loose = tile_1
         tile_loose.path.add_tile(tile_0)
-        # TODO actualiser le graph ici pour opti
         tile_win.path.fusion(tile_loose.path)
+    elif random.random() > 0.9:
+        tile_1.path.add_tile(tile_0)
 
 
 def find_crossroads(laby: 'Labyrinth') -> list:

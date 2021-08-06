@@ -1,3 +1,4 @@
+from models.labyrinth.generate_steps.impasses import impasses
 from models.labyrinth.generate_steps.init_table import init_table
 from models.labyrinth.generate_steps.make_path import one_shot_the_path
 from models.labyrinth.generate_steps.mesure_distance import mesure_distance
@@ -18,5 +19,8 @@ def all_step(laby: 'Labyrinth'):
 
     print("Résolution du labyrinthe")
     resoudre_lab(laby)
+
+    print("Calcul des impasses")
+    impasses(laby)
 
     print("Done")
