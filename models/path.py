@@ -1,4 +1,12 @@
-class _Path:
+from typing import List
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from models import Tile
+
+
+class Path:
 
     def __init__(self,
                  color: int
@@ -20,7 +28,7 @@ class _Path:
         tile._Case__path = self
 
     @property
-    def tiles(self):
+    def tiles(self) -> List['Tile']:
         return self.__tiles
 
     def fusion(self, other):

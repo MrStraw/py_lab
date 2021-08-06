@@ -1,4 +1,4 @@
-from models import _Tile
+from models import Tile
 
 
 def print_t(table, mode: str = 'couleur'):
@@ -9,7 +9,7 @@ def print_t(table, mode: str = 'couleur'):
         print(table)
 
     elif mode == 'distance':
-        arrive: _Tile = table[l_ligne - 2, l_colone - 1]
+        arrive: Tile = table[l_ligne - 2, l_colone - 1]
         t = len(str(arrive.distance))
         s = ''
         for lignes in table:
@@ -96,7 +96,7 @@ def print_t(table, mode: str = 'couleur'):
         print(s)
 
 
-def search_wall_around(tile: _Tile):
+def search_wall_around(tile: Tile):
     table = tile.table
     l_ligne = table.shape[0]
     l_colone = table.shape[1]
@@ -116,7 +116,7 @@ def search_wall_around(tile: _Tile):
         ligne_v = t[0] + tile.x
         colone_v = t[1] + tile.y
         try:
-            case_voisine: _Tile = tableau[ligne_v, colone_v]
+            case_voisine: Tile = tableau[ligne_v, colone_v]
         except IndexError:
             continue
         if 0 > ligne_v > l_ligne - 1 or 0 > colone_v > l_colone - 1:

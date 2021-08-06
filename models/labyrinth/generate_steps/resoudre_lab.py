@@ -1,13 +1,14 @@
-from models import _Tile
+from models import Tile
 from models.labyrinth.simplify import *
 
 
 def resoudre_lab(laby: 'Labyrinth'):
     laby.tile_arrival._solution = 1
-    find(laby.tile_arrival)
+    laby.lists.solutions.append(laby.tile_arrival)
+    find(laby.tile_arrival, laby)
 
 
-def find(tile: _Tile):
+def find(tile: Tile, laby):
     choosen = None
     for voisin in tile.voisins:
         if not voisin.path or voisin._solution == -1:
@@ -20,5 +21,5 @@ def find(tile: _Tile):
                 choosen = voisin
     if choosen:
         choosen._solution = 1
-        # if not choosen.is_start:
-        find(choosen)
+        laby.lists.solutions.append(choosen)
+        find(choosen, laby)

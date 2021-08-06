@@ -1,28 +1,37 @@
 import random
 
-from models import _Tile
+from models import Tile
 from models.labyrinth.simplify import *
 
 
 def one_shot_the_path(laby: 'Labyrinth'):
     crossroads_list = find_crossroads(laby)
-    while crossroads_list:
-        crossroad = crossroads_list.pop()
-        make_one_step_path(laby, crossroad)
+    if laby.methode == 'full':
+        while crossroads_list:
+            crossroad = crossroads_list.pop()
+            make_one_step_path(laby, crossroad)
+    elif laby.methode == 'hole':
+        while laby.tile_start.path is not laby.tile_arrival.path:
+            crossroad = crossroads_list.pop()
+            make_one_step_path(laby, crossroad)
+    else:
+        raise Exception('Methode not reconize')
+
+    delete_falses_paths(laby)
 
 
 def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
     table = laby.table
     tile_l = crossroad[0]
     tile_c = crossroad[1]
-    tile_0: _Tile = table[tile_l, tile_c]
+    tile_0: Tile = table[tile_l, tile_c]
 
     if crossroad[2] == '-':
-        tile_1: _Tile = table[tile_l, tile_c - 1]
-        tile_2: _Tile = table[tile_l, tile_c + 1]
+        tile_1: Tile = table[tile_l, tile_c - 1]
+        tile_2: Tile = table[tile_l, tile_c + 1]
     else:
-        tile_1: _Tile = table[tile_l - 1, tile_c]
-        tile_2: _Tile = table[tile_l + 1, tile_c]
+        tile_1: Tile = table[tile_l - 1, tile_c]
+        tile_2: Tile = table[tile_l + 1, tile_c]
 
     if tile_1.path is not tile_2.path:  # TODO Le graphique ne s'incere pas entre les deux (envoyer une list.copy en return)
         if len(tile_1.path) > len(tile_2.path):
@@ -33,7 +42,7 @@ def make_one_step_path(laby: 'Labyrinth', crossroad: (int, int, str)):
             tile_loose = tile_1
         tile_loose.path.add_tile(tile_0)
         tile_win.path.fusion(tile_loose.path)
-    elif random.random() > 0.9:
+    elif random.random() < laby.break_proba:
         tile_1.path.add_tile(tile_0)
 
 
@@ -52,3 +61,9 @@ def find_crossroads(laby: 'Labyrinth') -> list:
 
     random.shuffle(pile)
     return pile
+
+
+def delete_falses_paths(laby: 'Labyrinth'):
+    for tile in laby.tiles:
+        if tile.path and tile.path is not laby.tile_start.path:
+            del tile.path

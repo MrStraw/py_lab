@@ -1,26 +1,27 @@
+from models import Tile
 from models.labyrinth.simplify import *
 
 
 def impasses(laby: 'Labyrinth'):
+    return
 
-    # First clean, on ajoute les chemins:
-    # for tile in laby.tiles:
-    #     if tile.path:
-    #         tile.deadlock = False
+    def is_full_path(tile: Tile) -> bool:
+        is_path = bool(tile.path)
+        is_deadlock = tile in laby.lists.deadlocks
+        return is_path and not is_deadlock
 
-    # nettoyage
     stop = 0
     while stop != 2:
         stop += 1
         for tile in laby.tiles:
-            if tile.deadlock:
+            if not is_full_path(tile):
                 continue
             if tile is laby.tile_start or tile is laby.tile_arrival:
                 continue
             nb_voisin = 0
             for voisin in tile.voisins:
-                if not voisin.deadlock:
+                if is_full_path(voisin):
                     nb_voisin += 1
             if nb_voisin <= 1:
-                tile.deadlock = True
+                laby.lists._deadlocks.append(tile)
                 stop = 0

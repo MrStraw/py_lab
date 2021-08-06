@@ -3,6 +3,7 @@ from models.labyrinth.simplify import *
 
 def mesure_distance(laby: 'Labyrinth'):
     laby.tile_start.distance = 1
+    laby.lists.distances.append(laby.tile_start)
     cpt = 0
     while not laby.tile_arrival.distance:
         cpt += 1
@@ -12,3 +13,4 @@ def mesure_distance(laby: 'Labyrinth'):
                     if not voisin.path or voisin.distance:
                         continue
                     voisin.distance = cpt + 1
+                    laby.lists.distances.append(voisin)

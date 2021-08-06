@@ -1,14 +1,16 @@
 import tkinter as tk
 
-from models import _Tile
+from models import Tile
 
 from models.labyrinth.simplify import *
 from utils import int_to_grad_hexa
 
 
 def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len: int, mode: str = 'B&W'):
-    if mode not in ['B&W', 'distance', 'solution', 'impasses']:
-        raise Exception(f"mode {mode} for screen() not reconize.")
+    def make_pix(tile: Tile, color: str):
+        x_pix = tile.x * pixel_len
+        y_pix = tile.y * pixel_len
+        canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len, y_pix + pixel_len, outline='', fill=color)
 
     # création du Black & White
     canvas.delete('all')
@@ -16,29 +18,27 @@ def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len: int, mode: str =
         x_pix = tile.x * pixel_len
         y_pix = tile.y * pixel_len
         if tile.path:
-            canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len, y_pix + pixel_len,
-                                    outline='', fill='white')
+            make_pix(tile, 'white')
+        elif len(tile.voisins) in [2, 3]:
+            make_pix(tile, '#8F000C')
+
+    grad = int_to_grad_hexa(laby.tile_arrival.distance)
 
     if mode == 'B&W':
         return
 
-    grad = int_to_grad_hexa(laby.tile_arrival.distance)
-    for tile in laby.path.tiles:
-        color = 'white'
-        x_pix = tile.x * pixel_len
-        y_pix = tile.y * pixel_len
+    elif mode == 'impasses':
+        print(len(laby.lists.deadlocks))
+        for tile in laby.lists.deadlocks:
+            make_pix(tile, 'grey')
 
-        if mode == 'distance':
-            if tile.distance:
-                color = grad[tile.distance - 1]
+    elif mode == 'distance':
+        for tile in laby.lists.distances:
+            make_pix(tile, grad[tile.distance - 1])
 
-        elif mode == 'solution':
-            if tile.is_solution:
-                color = grad[tile.distance - 1]
+    elif mode == 'solution':
+        for tile in laby.lists.solutions:
+            make_pix(tile, grad[tile.distance - 1])
 
-        elif mode == 'impasses':
-            if tile.deadlock:
-                color = 'grey'
-
-        canvas.create_rectangle(x_pix, y_pix, x_pix + pixel_len, y_pix + pixel_len,
-                                outline='', fill=color)
+    else:
+        raise Exception(f"mode {mode} for screen() not reconize.")

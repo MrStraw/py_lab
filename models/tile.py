@@ -2,25 +2,22 @@ from typing import List
 
 import numpy as np
 
-from models._path import _Path
+from models.path import Path
 
 
-class _Tile:
+class Tile:
 
     def __init__(self,
                  location: (int, int),
                  table: np.ndarray,
-                 path: _Path = None,
+                 path: Path = None,
                  start_or_arrival: str = None,
                  ):
 
         self.__location: (int, int) = location
         if path:
             path.add_tile(self)
-            self.deadlock: bool = False
-        else:
-            self.deadlock: bool = True
-        self.__path: _Path = path
+        self.__path: Path = path
         self.__is_start_or_arrival: int = 0
         self.make_start_or_arrival(start_or_arrival)
         self._solution: int = 0
@@ -64,12 +61,12 @@ class _Tile:
         return self.__table
 
     @property
-    def voisins(self) -> List['_Tile']:
+    def voisins(self) -> List['Tile']:
         tuples = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         voisins = []
         for t in tuples:
             try:
-                voisin: _Tile = self.table[t[0] + self.y, t[1] + self.x]
+                voisin: Tile = self.table[t[0] + self.y, t[1] + self.x]
             except IndexError:
                 continue
             if not self.x - 1 <= voisin.x <= self.x + 1 or not self.y - 1 <= voisin.y <= self.y + 1:
@@ -86,7 +83,17 @@ class _Tile:
         return self.__path
 
     @path.setter
-    def path(self, value: _Path):
+    def path(self, value: Path):
         value.add_tile(self)
-        self.__path: _Path = value
-        self.deadlock: bool = False
+        self.__path: Path = value
+
+    @path.deleter
+    def path(self):
+        path = self.__path
+        for tile in path.tiles:
+            tile._Tile__path = None
+        del path
+
+    # @property
+    # def deadlock(self) -> bool:
+    #     return True if self. in self.

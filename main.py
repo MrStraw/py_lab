@@ -1,12 +1,12 @@
 from models.labyrinth import Labyrinth
-from utils.print_t import print_t
 
-laby = Labyrinth(shape=(120, 50),
-                 methode='full')
+a = 10
+tup = (int(1920/a), int(1080/a))
 
-# print_t(laby.table, 'distance')
+laby = Labyrinth(shape=tup,
+                 methode='hole',
+                 break_proba=0.4)
 
-laby.screen('impasses')
+laby.screen('distance')
 
-
-# TODO seed, % de fusion, arrive et depart, thread screen()
+# TODO seed, arrive et depart, thread screen()
