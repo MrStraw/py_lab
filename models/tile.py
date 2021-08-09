@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-from typing import List, Tuple
+from typing import List, Tuple, TYPE_CHECKING, Union, Literal
 
 import numpy as np
 
 from models.path import Path
-
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from models.labyrinth import Labyrinth
@@ -15,22 +13,20 @@ if TYPE_CHECKING:
 class Tile:
 
     def __init__(self,
-                 location: (int, int),
+                 location: Tuple[int, int],
                  labyrinth: 'Labyrinth',
                  path: Path = None,
-                 start_or_arrival: str = None,
                  ):
 
         self.__location: Tuple[int, int] = location
         if path:
             path.add_tile(self)
         self._path: Path = path
-        self.__is_start_or_arrival: int = 0
-        self.make_start_or_arrival(start_or_arrival)
-        self._solution: int = 0
-        self.distance: int = None
+        self.__is_start_or_arrival: Literal[0, 1, 2] = 0
+        self._solution: Union[bool, None] = None
+        self.distance: Union[int, None] = None
         self.__table: np.ndarray = labyrinth.table
-        self.labyrinth = labyrinth
+        self.labyrinth: 'Labyrinth' = labyrinth
 
     @property
     def location(self):
@@ -52,7 +48,7 @@ class Tile:
     def is_arrival(self):
         return True if self.__is_start_or_arrival == 2 else False
 
-    def make_start_or_arrival(self, value: str):
+    def make_start_or_arrival(self, value: Literal['s', 'a']):
         if value == 's':
             self.__is_start_or_arrival = 1
             self.labyrinth._tile_start = self
@@ -64,7 +60,7 @@ class Tile:
 
     @property
     def is_solution(self):
-        return True if self._solution == 1 else False
+        return True if self._solution else False
 
     @property
     def table(self):

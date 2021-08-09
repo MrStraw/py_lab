@@ -3,7 +3,7 @@ from models.labyrinth.simplify import *
 
 
 def resoudre_lab(laby: 'Labyrinth'):
-    laby.tile_arrival._solution = 1
+    laby.tile_arrival._solution = True
     laby.lists.solutions.add(laby.tile_arrival)
     find(laby.tile_arrival, laby)
 
@@ -12,16 +12,16 @@ def find(tile: Tile, laby):
     choosen = None
 
     for voisin in tile.voisins:
-        if not voisin.path or voisin._solution == -1 or voisin.distance is None:
+        if not voisin.path or voisin._solution is False or voisin.distance is None:
             continue
-        if not voisin._solution:
+        if voisin._solution is None:
             if choosen is None:
                 choosen = voisin
             elif voisin.distance < choosen.distance:
-                choosen._solution = -1
+                choosen._solution = False
                 choosen = voisin
 
-    choosen._solution = 1
+    choosen._solution = True
     laby.lists.solutions.add(choosen)
 
     if choosen is not laby.tile_start:

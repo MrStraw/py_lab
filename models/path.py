@@ -1,6 +1,4 @@
-from typing import Set
-
-from typing import TYPE_CHECKING
+from typing import Set, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from models import Tile
@@ -12,9 +10,9 @@ class Path:
                  color: int
                  ):
 
-        self.color = color
+        self.color: int = color
         self.__tiles = set()
-        self.__length = 0
+        self.__length: int = 0
 
     def __len__(self):
         return self.__length
