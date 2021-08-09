@@ -27,7 +27,7 @@ def print_mode(laby: 'Labyrinth', canvas: tk.Canvas, pixel_len, mode: str = 'B&W
     if mode == 'B&W':
         pass
 
-    elif mode == 'impasses':
+    elif mode == 'deadlocks':
         print(len(laby.lists.deadlocks))
         for tile in laby.lists.deadlocks:
             make_pix(tile, 'grey')

@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List, Tuple, Union, Literal
+from typing import List, Tuple, Union, Literal, Set
 
 from models import Lists
 from models.tile import Tile
@@ -73,11 +73,11 @@ class Labyrinth:
         self.__methode: str = value
 
     @property
-    def tiles(self) -> List[Tile]:
-        tiles = []
+    def tiles(self) -> Set[Tile]:
+        tiles = set()
         for lignes in self.table:
             for tile in lignes:
-                tiles.append(tile)
+                tiles.add(tile)
         return tiles
 
     @property
@@ -99,9 +99,9 @@ class Labyrinth:
         all_step(self)
 
     def screen(self,
-               mode: str = 'B&W',
+               mode: Literal['B&W', 'deadlocks', 'distance', 'solution'] = 'B&W',
                fullscreen: bool = False,
-               display: str = 'spread out'
+               display: Literal['spread out', 'square'] = 'spread out'
                ):
         """
         Print the maze with a lot of beautifuls options

@@ -62,7 +62,7 @@ def screen_lab(laby: 'Labyrinth', mode: str, fullscreen: bool, display: str):
     # menu_print.add_separator()
     menu_print.add_command(label="Classique", command=lambda: simple_sprint('B&W'))
     menu_print.add_command(label="Solution", command=lambda: simple_sprint('solution'))
-    menu_print.add_command(label="Voir les impasses", command=lambda: simple_sprint('impasses'))
+    menu_print.add_command(label="Voir les impasses", command=lambda: simple_sprint('deadlocks'))
     # menu_print.add_command(label="Tous les chemins", command=lambda: simple_sprint('tout chemins'))
     menu_print.add_command(label="Gradiant des distances", command=lambda: simple_sprint('distance'))
     # menu_print.add_command(label="Tout les chemins en gradiant", command=lambda: simple_sprint('grad sans impasse'))
