@@ -28,7 +28,7 @@ class Tile:
         self.__is_start_or_arrival: int = 0
         self.make_start_or_arrival(start_or_arrival)
         self._solution: int = 0
-        self.distance: int = 0
+        self.distance: int = None
         self.__table: np.ndarray = labyrinth.table
         self.labyrinth = labyrinth
 

@@ -10,8 +10,9 @@ def resoudre_lab(laby: 'Labyrinth'):
 
 def find(tile: Tile, laby):
     choosen = None
+
     for voisin in tile.voisins:
-        if not voisin.path or voisin._solution == -1:
+        if not voisin.path or voisin._solution == -1 or voisin.distance is None:
             continue
         if not voisin._solution:
             if choosen is None:
@@ -19,7 +20,9 @@ def find(tile: Tile, laby):
             elif voisin.distance < choosen.distance:
                 choosen._solution = -1
                 choosen = voisin
-    if choosen:
-        choosen._solution = 1
-        laby.lists.solutions.add(choosen)
+
+    choosen._solution = 1
+    laby.lists.solutions.add(choosen)
+
+    if choosen is not laby.tile_start:
         find(choosen, laby)
