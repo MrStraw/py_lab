@@ -1,20 +1,27 @@
-from typing import List
+from __future__ import annotations
+
+from typing import List, Tuple
 
 import numpy as np
 
 from models.path import Path
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from models.labyrinth import Labyrinth
 
 
 class Tile:
 
     def __init__(self,
                  location: (int, int),
-                 table: np.ndarray,
+                 labyrinth: 'Labyrinth',
                  path: Path = None,
                  start_or_arrival: str = None,
                  ):
 
-        self.__location: (int, int) = location
+        self.__location: Tuple[int, int] = location
         if path:
             path.add_tile(self)
         self._path: Path = path
@@ -22,7 +29,8 @@ class Tile:
         self.make_start_or_arrival(start_or_arrival)
         self._solution: int = 0
         self.distance: int = 0
-        self.__table: np.ndarray = table
+        self.__table: np.ndarray = labyrinth.table
+        self.labyrinth = labyrinth
 
     @property
     def location(self):
@@ -47,8 +55,10 @@ class Tile:
     def make_start_or_arrival(self, value: str):
         if value == 's':
             self.__is_start_or_arrival = 1
+            self.labyrinth._tile_start = self
         elif value == 'a':
             self.__is_start_or_arrival = 2
+            self.labyrinth._tile_arrival = self
         else:
             self.__is_start_or_arrival = 0
 

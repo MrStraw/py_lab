@@ -2,19 +2,21 @@ import sys
 
 from models.labyrinth import Labyrinth
 
-a = 9
+a = 5
 tup = (int(1920 / a), int(1080 / a))
 sys.setrecursionlimit(3000)
-
-# TODO arrive et depart, thread screen(), affichage seed, .export
-
+# TODO .export, solution bug, grad couleur vert a rouge (adapatable), bug set_X_tile trop grand (meme apres verif)
 laby = Labyrinth(shape=tup,
-                 seed=None,
+                 # seed='?lNe#Hh#i69_Y17QzT_o',
                  methode='hole',
-                 complexity=0.07,
-                 stop_to_step='deadlock'
+                 complexity=0.1,
+                 stop_to_step='deadlock',
+                 set_start_tile=(20, 12),
+                 set_arrival_tile=(300, 200)
                  )
 print(laby.seed)
-laby.screen(mode='B&W',
-            fullscreen=False,
-            display='square')
+
+laby.screen(mode='distance',
+            fullscreen=True,
+            # display='square'
+            )

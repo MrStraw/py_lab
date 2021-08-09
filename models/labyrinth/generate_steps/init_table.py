@@ -15,11 +15,6 @@ def init_table(laby: 'Labyrinth'):
         for x in range(width):
             if x % 2 and y % 2:
                 path = Path(colors.pop())
-                table[y, x] = Tile((x, y), table, path)
+                table[y, x] = Tile((x, y), laby, path)
             else:
-                table[y, x] = Tile((x, y), table)
-
-    laby.tile_start.make_start_or_arrival('s')
-    laby.tile_start.path = table[1, 1].path
-    laby.tile_arrival.make_start_or_arrival('a')
-    laby.tile_arrival.path = table[height - 2, width - 2].path
+                table[y, x] = Tile((x, y), laby)

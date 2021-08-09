@@ -1,4 +1,4 @@
-from typing import List
+from typing import Set
 
 from typing import TYPE_CHECKING
 
@@ -28,7 +28,7 @@ class Path:
         tile._path = self
 
     @property
-    def tiles(self) -> set['Tile']:
+    def tiles(self) -> Set['Tile']:
         return self.__tiles
 
     def fusion(self, other):
