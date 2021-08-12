@@ -1,4 +1,4 @@
-from typing import Set, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from models import Tile
@@ -7,18 +7,11 @@ if TYPE_CHECKING:
 class Lists:
 
     def __init__(self):
-        self._deadlocks = set()
-        self._solutions = set()
-        self._distances = set()
+        self.deadlocks: set['Tile'] = set()
+        self.solutions: set['Tile'] = set()
+        self.distances: dict[int, set['Tile']] = dict()
 
-    @property
-    def deadlocks(self) -> Set['Tile']:
-        return self._deadlocks
-
-    @property
-    def solutions(self) -> Set['Tile']:
-        return self._solutions
-
-    @property
-    def distances(self) -> Set['Tile']:
-        return self._distances
+    def distance_add(self, distance, tile: 'Tile'):
+        if distance not in self.distances.keys():
+            self.distances.update({distance: set()})
+        self.distances[distance].add(tile)

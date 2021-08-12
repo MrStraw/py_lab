@@ -41,7 +41,7 @@ class Labyrinth:
         height = shape[1] if shape[1] % 2 else shape[1] + 1
         height = 5 if height < 5 else height
         self.__shape: Tuple[int, int] = (width, height)
-        self.methode: Literal['hole', 'full'] = methode
+        self._methode: Literal['hole', 'full'] = methode
         self.table: np.ndarray = np.zeros((self.height, self.width), dtype=Tile)
         self._stop_to_step: str = stop_to_step
         self.__setStartTile: Tuple[int, int] = set_start_tile
@@ -61,16 +61,6 @@ class Labyrinth:
     @property
     def height(self):
         return self.shape[1]
-
-    @property
-    def methode(self):
-        return self.__methode
-
-    @methode.setter
-    def methode(self, value: str):
-        if value not in ['hole', 'full']:
-            raise Exception('methode not reconize')
-        self.__methode: str = value
 
     @property
     def tiles(self) -> Set[Tile]:

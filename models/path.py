@@ -32,6 +32,6 @@ class Path:
     def fusion(self, other):
         for tile in other.tiles:
             tile.path = self
-            self.__tiles.add(tile)
+        self.__tiles |= other.tiles
         self.__length += other.__length
         del other

@@ -1,4 +1,5 @@
 import colorsys
+from typing import Literal
 
 
 def int_to_grad_hexa(nb_value: int):
@@ -10,7 +11,7 @@ def int_to_grad_hexa(nb_value: int):
             v = maxi
         v = v / 360
         rgb = colorsys.hsv_to_rgb(v, 1, 1)
-        hexa = "".join("%02X" % round(i * 255) for i in rgb)
-        hexa = '#' + hexa
+        hexa = '#' + "".join("%02X" % round(i * 255) for i in rgb)
         grad.append(hexa)
     return grad
+

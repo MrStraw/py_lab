@@ -27,6 +27,7 @@ class Tile:
         self.distance: Union[int, None] = None
         self.__table: np.ndarray = labyrinth.table
         self.labyrinth: 'Labyrinth' = labyrinth
+        self.print_rectangle = None
 
     @property
     def location(self):
@@ -67,9 +68,9 @@ class Tile:
         return self.__table
 
     @property
-    def voisins(self) -> List['Tile']:
+    def voisins(self) -> set['Tile']:
         tuples = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        voisins = []
+        voisins = set()
         for t in tuples:
             try:
                 voisin: Tile = self.table[t[0] + self.y, t[1] + self.x]
@@ -77,7 +78,7 @@ class Tile:
                 continue
             if not self.x - 1 <= voisin.x <= self.x + 1 or not self.y - 1 <= voisin.y <= self.y + 1:
                 continue
-            voisins.append(voisin)
+            voisins.add(voisin)
         return voisins
 
     @property

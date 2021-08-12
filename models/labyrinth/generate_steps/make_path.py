@@ -12,11 +12,11 @@ def one_shot_the_path(laby: 'Labyrinth'):
     for i in range(len(crossroads_list)):
         list_rand.append(random.random())
 
-    if laby.methode == 'full':
+    if laby._methode == 'full':
         while crossroads_list:
             crossroad = crossroads_list.pop()
             make_one_step_path(laby, list_rand.pop(), crossroad)
-    elif laby.methode == 'hole':
+    elif laby._methode == 'hole':
         while laby.tile_start.path is not laby.tile_arrival.path:
             crossroad = crossroads_list.pop()
             make_one_step_path(laby, list_rand.pop(), crossroad)
